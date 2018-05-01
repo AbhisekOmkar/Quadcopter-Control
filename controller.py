@@ -6,6 +6,18 @@ components:
     gps commands and yaw
     waypoint following
 """
+#    def __init__(self,
+#                 z_k_p=6.0,
+#                 z_k_d=4.0,
+#                 k_p_lat=6.0,
+#                 k_d_lat=4.0,
+#                 k_p_roll=7.0,
+#                 k_p_pitch=7.0,
+#                 k_p_yaw=4.5,
+#                 k_p_p=20.0,
+#                 k_p_q=20.0,
+#                 k_p_r=5.0):
+
 import numpy as np
 from frame_utils import euler2RM
 
@@ -20,11 +32,14 @@ class NonlinearController(object):
     def __init__(self,
                  z_k_p=6.0,
                  z_k_d=4.0,
+
                  k_p_lat=6.0,
                  k_d_lat=4.0,
-                 k_p_roll=7.0,
-                 k_p_pitch=7.0,
+
+                 k_p_roll=8.0,
+                 k_p_pitch=8.0,
                  k_p_yaw=4.5,
+
                  k_p_p=20.0,
                  k_p_q=20.0,
                  k_p_r=5.0):
