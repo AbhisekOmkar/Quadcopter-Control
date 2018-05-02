@@ -30,19 +30,19 @@ MAX_TORQUE = 1.0
 class NonlinearController(object):
 
     def __init__(self,
-                 z_k_p=6.0,
-                 z_k_d=4.0,
+                 z_k_p=10.0,
+                 z_k_d=6.0,
 
-                 k_p_lat=6.0,
-                 k_d_lat=4.0,
+                 k_p_lat=4.0,
+                 k_d_lat=1.5,
 
-                 k_p_roll=8.0,
-                 k_p_pitch=8.0,
+                 k_p_roll=7.0,
+                 k_p_pitch=7.0,
                  k_p_yaw=4.5,
 
-                 k_p_p=20.0,
-                 k_p_q=20.0,
-                 k_p_r=5.0):
+                 k_p_p=15.0,
+                 k_p_q=15.0,
+                 k_p_r=7.0):
         """Initialize the controller object and control gains"""
 
         self.z_k_p = z_k_p
