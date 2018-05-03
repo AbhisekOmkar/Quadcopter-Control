@@ -158,11 +158,8 @@ V3F QuadControl::RollPitchControl(V3F accelCmd, Quaternion<float> attitude, floa
 	  pqrCmd.y = (R(1, 1) * b_x_term - R(0, 1) * b_y_term) / R(2, 2);
   }
   else {
-	  pqrCmd.x = 0.0;
-	  pqrCmd.y = 0.0;
+	  pqrCmd.x = 0.0; pqrCmd.y = 0.0;
   }
-
-
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   return pqrCmd;
@@ -192,7 +189,18 @@ float QuadControl::AltitudeControl(float posZCmd, float velZCmd, float posZ, flo
   float thrust = 0;
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
+  float z_err = posZCmd - posZ;
+  float vel_err = velZCmd - velZ;
 
+  float p = kpPosZ * z_err;
+  float d = kpVelZ * vel_err;
+
+  float vert_acc_cmd = p + d + accelZCmd;
+
+  float b_z = R(2, 2);
+  
+  float acc = (vert_acc_cmd = CONST_GRAVITY) / b_z;
+  float thrust = - mass * CONSTRAIN(acc, - maxAscentRate/dt, maxAscentRate/dt);
 
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
