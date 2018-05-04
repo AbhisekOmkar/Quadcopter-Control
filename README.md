@@ -20,7 +20,7 @@ if (collThrustCmd > 0.f){
 	  pqrCmd.y = (R(1, 1) * b_x_term - R(0, 1) * b_y_term) / R(2, 2);
   }
   else {
-	  pqrCmd.x = 0.0; pqrCmd.y = 0.0;
+	  pqrCmd.x = 0.0; pqrCmd.y = 0.0;	  
   }
-  `
+`
   
