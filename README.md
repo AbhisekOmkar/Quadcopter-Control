@@ -4,7 +4,8 @@
 ## C++ Controller
 
 ### 1. Roll-pitch controller
-`  if (collThrustCmd > 0.f){
+`
+if (collThrustCmd > 0.f){
 	  float c = collThrustCmd / mass;
 
 	  float b_x_c_target = accelCmd.x / c;
@@ -20,5 +21,6 @@
   }
   else {
 	  pqrCmd.x = 0.0; pqrCmd.y = 0.0;
-  }`
+  }
+  `
   
