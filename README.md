@@ -37,4 +37,20 @@ To do this I have to get the acceleration command. This is c. After making sure 
 	  pqrCmd.x = 0.0; pqrCmd.y = 0.0;
 	}
   
-  
+### Altitude Control
+To control the altitude, I used a full PID controller. I first obtained the errors for the altitude, vertical acceleration, and the running altitude error. Then I multiplied these by their accociated kp values to get the PID terms. These were added to the vertical acceleration command to get and updated command. After making sure to account for gravity and the current rotation of the copter, I constrained it to the max acceleration rates, and multiplied it by the mass to obtain our thrust. This value was made negative because our z-axis points downward. 
+
+	  float z_err = posZCmd - posZ;
+	  integratedAltitudeError += z_err * dt;
+	  float vel_err = velZCmd - velZ;
+
+	  float p = kpPosZ * z_err;
+	  float i = KiPosZ * integratedAltitudeError;
+	  float d = kpVelZ * vel_err;
+
+	  float vert_acc_cmd = p + i + d + accelZCmd;
+
+	  float b_z = R(2, 2);
+
+	  float acc = (vert_acc_cmd - CONST_GRAVITY) / b_z;
+	  thrust = - mass * CONSTRAIN(acc, - maxAscentRate/dt, maxAscentRate/dt);
