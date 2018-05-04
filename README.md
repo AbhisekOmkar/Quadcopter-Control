@@ -111,7 +111,7 @@ A basic P controller is used to control the yaw. But additional calculations wer
 ### Scenerio  2: Attitude Control
 The Drone very quickly corrected for its initial rotation. Kp_pqr and Kp_bank were tuned by experimentation. The Drone passed both performance metrics. 
 
-INSERT PICTURE
+![alt text](pictures/attitude.jpg)
 
 PASS: ABS(Quad.Roll) was less than 0.025000 for at least 0.750000 seconds
 PASS: ABS(Quad.Omega.X) was less than 2.500000 for at least 0.750000 seconds
@@ -119,7 +119,7 @@ PASS: ABS(Quad.Omega.X) was less than 2.500000 for at least 0.750000 seconds
 ### Scenerio 3: Position control
 Two drones try to correct their lateral position. One drone is initialized with a 45 degree yaw. This is cotrolle by the lateral position, altitude, and yaw controller. And it uses the Kp_pos_z, Kp_vel_z, Kp_vel_xy, Kp_vel_z, Kp_yaw, and kp_pqr values. The x position of both drones was within the target range, and the yaw of the second copter was also within the appropriate range.
 
-INSERT PICTURE  
+![alt text](pictures/position.jpg)
 
 PASS: ABS(Quad1.Pos.X) was less than 0.100000 for at least 1.250000 seconds
 PASS: ABS(Quad2.Pos.X) was less than 0.100000 for at least 1.250000 seconds
@@ -128,7 +128,7 @@ PASS: ABS(Quad2.Yaw) was less than 0.100000 for at least 1.000000 seconds
 ### Scenerio 4: Non-Idealities
 3 drones with slightly different initial values than the controllers were expecting. All were trying to go one meter forward. The full PID control worked well here, helping to account for the natural error. The drones were all able to reach the target within the alloted timeframe 
 
-INSERT PICTURE
+![alt text](pictures/nonidealities.jpg)
 
 PASS: ABS(Quad1.PosFollowErr) was less than 0.100000 for at least 1.500000 seconds
 PASS: ABS(Quad2.PosFollowErr) was less than 0.100000 for at least 1.500000 seconds
@@ -137,6 +137,6 @@ PASS: ABS(Quad3.PosFollowErr) was less than 0.100000 for at least 1.500000 secon
 ### Scenerio 5: Trajectory following
 Here two drones try to follow the same trajectory. The second drone performed very well, coming under the error threshhold very quickly.
 
-INSERT PICTURE
+![alt text](pictures/trajectory.jpg)
 
 PASS: ABS(Quad2.PosFollowErr) was less than 0.250000 for at least 3.000000 seconds
