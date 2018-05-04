@@ -54,3 +54,53 @@ To control the altitude, I used a full PID controller. I first obtained the erro
 
 	  float acc = (vert_acc_cmd - CONST_GRAVITY) / b_z;
 	  thrust = - mass * CONSTRAIN(acc, - maxAscentRate/dt, maxAscentRate/dt);
+
+
+## Lateral position control
+Here I take the desired lateral position, velocity and acceleration, and calculate the desire horizontal acceleration. First i check if the magnitude of the velocity command is grater than the maximum velocity. If it is I multiply the maximum speed by a normalized vector of the velocity commands. This gives more reasonable acceleration commands that are between 0 and the maximum speed. Then I implement a PD controller using the desired and actual position and velocity. This is then normalized again to make sure it hasn't exeeded the desired maximum acceleration.
+
+	  if (velCmd.mag() > maxSpeedXY) {
+	      velCmd = velCmd.norm() * maxSpeedXY;
+	  }
+
+	  float pos_err_x =  posCmd.x - pos.x;
+	  float pos_err_y = posCmd.y - pos.y;
+
+	  float vel_err_x = velCmd.x - vel.x;
+	  float vel_err_y = velCmd.y - vel.y;
+
+	  float p_x = pos_err_x * kpPosXY;
+	  float p_y = pos_err_y * kpPosXY;
+
+	  float d_x = vel_err_x * kpVelXY;
+	  float d_y = vel_err_y * kpVelXY;
+
+	  accelCmd.x = p_x + d_x + accelCmdFF.x;
+	  accelCmd.y = p_y + d_y + accelCmdFF.y;
+
+	  if (accelCmd.mag() > maxAccelXY) {
+	      accelCmd = accelCmd.norm() * maxAccelXY;
+	  }
+
+	  accelCmd.z = 0;
+
+	
+### Yaw Control
+A basic P controller is used to control the yaw. But additional calculations were used to make sure that the controller always turned towards the desired direction in the way that required the least motion. 
+
+	  float yaw_cmd_pi;
+	  if (yawCmd > 0) {
+		  yaw_cmd_pi = fmodf(yawCmd, 2 * F_PI);
+	  }
+	  else {
+		  yaw_cmd_pi = -fmodf(-yawCmd, 2 * F_PI);
+	  }
+
+	  float yaw_err = yaw_cmd_pi - yaw;
+	  if (yaw_err > F_PI) {
+		  yaw_err -= (2.0 * F_PI);
+	  }else if (yaw_err < -F_PI) {
+		  yaw_err += 2 * F_PI;
+	  }
+
+	  yawRateCmd = kpYaw * yaw_err;
